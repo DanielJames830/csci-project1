@@ -63,9 +63,7 @@ export default {
     const score = ref(null);
 
     const onScore = (payload) => {
-      console.log(payload.score); // from 0 to 4
-      console.log(payload.strength); // one of : 'risky', 'guessable', 'weak', 'safe' , 'secure'
-      score.value = payload.score;
+        score.value = payload.score;
     };
 
     async function join(e) {
