@@ -6,8 +6,11 @@ import SignIn from "../views/SignIn.vue";
 import Feed from "@/views/Feed.vue";
 import Search from "@/views/Search.vue";
 import Menu from "@/views/Menu.vue";
-import JoinForm from "@/components/JoinForm.vue";
 import Profile from "@/views/Profile.vue";
+
+const isAuthenticated = () => {
+  return !!localStorage.getItem("user");
+};
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -16,18 +19,24 @@ const router = createRouter({
       path: "/",
       name: "home",
       component: Home,
+      meta: { authRequired: false },
     },
     {
       path: "/join",
       name: "join",
       component: Join,
+      meta: { authRequired: false },
     },
-
-    { path: "/signin", name: "signin", component: SignIn },
+    {
+      path: "/signin",
+      name: "signin",
+      component: SignIn,
+      meta: { authRequired: false },
+    },
     {
       path: "/main",
-      name: "",
       component: Main,
+      meta: { authRequired: true },
       children: [
         {
           path: "",
@@ -37,19 +46,34 @@ const router = createRouter({
             focus: Feed,
             rightSidebar: Search,
           },
+          meta: { authRequired: true },
         },
         {
           path: "/profile",
+          name: "profile",
           components: {
             leftSidebar: Menu,
             focus: Profile,
             rightSidebar: Search,
           },
+          meta: { authRequired: true },
         },
-
       ],
     },
+    {
+      path: "/:pathMatch(.*)*",
+      redirect: "/",
+    },
   ],
+});
+
+// Global navigation guard
+router.beforeEach((to, from, next) => {
+  if (to.meta.authRequired && !isAuthenticated()) {
+    next("/");
+  } else {
+    next();
+  }
 });
 
 export default router;
