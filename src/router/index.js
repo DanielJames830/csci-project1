@@ -67,7 +67,6 @@ const router = createRouter({
   ],
 });
 
-// Global navigation guard
 router.beforeEach((to, from, next) => {
   if (to.meta.authRequired && !isAuthenticated()) {
     next("/");

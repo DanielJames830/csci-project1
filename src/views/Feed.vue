@@ -37,12 +37,12 @@ async function getMessages(before, after, limit) {
         }
 
         if (Array.isArray(responseData)) {
-            messages.value.push(...responseData);  // Spread operator to add each message individually
+            messages.value.push(...responseData);
 
             messages.value.sort((a, b) => {
                 const dateA = new Date(a.updatedAt);
                 const dateB = new Date(b.updatedAt);
-                return dateB - dateA;  // Sort descending (most recent first)
+                return dateB - dateA; 
             });
 
             latestCallTime.value = messages.value[0].updatedAt;
@@ -87,7 +87,7 @@ async function getNewMessagesCount(after) {
             console.log("New messages count:", countData.total);
             newMessagesCount.value = countData.total;
 
-            // Handle the count of new messages if needed
+          
         } else {
             console.error("Failed to fetch new messages count:", countData);
         }
@@ -163,7 +163,6 @@ button:hover{
 .scroll-container {
     max-height: 500px;
     overflow-y: auto;
-    /* Enable scrolling when content overflows */
 
     padding: 10px;
 }

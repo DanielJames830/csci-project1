@@ -50,7 +50,6 @@ export default {
                 return; // Prevent form submission if email is invalid
             }
 
-            // API call logic
             const url = "https://hap-app-api.azurewebsites.net/user/login";
             const data = { email, password };
 
@@ -77,7 +76,6 @@ export default {
                 // Save to local storage
                 localStorage.setItem("user", JSON.stringify(userData));
 
-                // Navigate to the main page
                 router.push({ name: "main" });
             } catch (error) {
                 console.error("An error occurred while submitting the form:", error);

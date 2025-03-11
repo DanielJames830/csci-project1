@@ -38,10 +38,8 @@ import { ref, onMounted, useTemplateRef } from 'vue';
 import Toast from '@/components/Toast.vue';
 import EditForm from '@/components/EditForm.vue';
 
-// Toast
 const message = ref('')
 
-// Dialog
 const nameDialog = ref(null);
 
 const form = useTemplateRef('form');
