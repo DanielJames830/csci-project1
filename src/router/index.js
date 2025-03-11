@@ -7,6 +7,7 @@ import Feed from "@/views/Feed.vue";
 import Search from "@/views/Search.vue";
 import Menu from "@/views/Menu.vue";
 import Profile from "@/views/Profile.vue";
+import PrivateFeed from "@/views/PrivateFeed.vue";
 
 const isAuthenticated = () => {
   return !!localStorage.getItem("user");
@@ -58,8 +59,19 @@ const router = createRouter({
           },
           meta: { authRequired: true },
         },
+        {
+          path: '/user/:userId',
+          components: {
+            leftSidebar: Menu,
+            focus: PrivateFeed,
+            rightSidebar: Search,
+          },
+          props: true,
+          meta: { authRequired: true },
+        },
       ],
     },
+    
     {
       path: "/:pathMatch(.*)*",
       redirect: "/",
