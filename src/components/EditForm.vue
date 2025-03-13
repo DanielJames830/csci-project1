@@ -31,6 +31,8 @@
 </template>
 
 <script>
+import { useUserStore } from '@/stores/user';
+import { storeToRefs } from 'pinia';
 import { ref, reactive, defineExpose } from 'vue';
 import { useRouter } from 'vue-router';
 import PasswordMeter from 'vue-simple-password-meter';
@@ -44,8 +46,8 @@ export default {
         const errorMessage = ref();
         const serverResponse = ref();
 
-        const userInfo = JSON.parse(localStorage.getItem("user"));
-        const token = userInfo.token
+        const userStore = useUserStore();
+        const { wholeName, userName, email, token} = storeToRefs(userStore);
 
         const formData = reactive({
             firstName: "",
@@ -133,7 +135,12 @@ export default {
         }
 
         console.log("Form data submitted successfully:", responseData);
-        localStorage.setItem("user", JSON.stringify(responseData));
+        userStore.$patch(() => {
+            userStore.email = responseData.email;
+            userStore.userName = responseData.userName;
+            userStore.firstName = responseData.firstName;
+            userStore.lastName = responseData.lastName;
+        });
 
     } catch (error) {
         console.error("An error occurred while submitting the form:", error);

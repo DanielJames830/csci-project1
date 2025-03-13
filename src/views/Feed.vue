@@ -1,9 +1,10 @@
 <script setup>import PostBar from '@/components/PostBar.vue';
 import Post from '@/components/Post.vue';
+import { useUserStore } from '@/stores/user';
 import { onMounted, onBeforeUnmount, ref } from 'vue';
 
-const userInfo = JSON.parse(localStorage.getItem("user"));
-const token = userInfo?.token;
+const userStore = useUserStore();
+const token = userStore.token;
 
 const earliestTime = ref();
 const latestCallTime = ref();

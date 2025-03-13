@@ -36,6 +36,7 @@
 </template>
 
 <script>
+import { useUserStore } from '@/stores/user';
 import { ref, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import PasswordMeter from 'vue-simple-password-meter';
@@ -127,8 +128,14 @@ export default {
       return;
     }
 
-    console.log("Form data submitted successfully:", responseData);
-    localStorage.setItem("user", JSON.stringify(responseData));
+    const userStore = useUserStore();
+    userStore.$patch(() => {
+      userStore.email = responseData.email;
+      userStore.userName = responseData.userName;
+      userStore.firstName = responseData.firstName;
+      userStore.lastName = responseData.lastName;
+      userStore.token = responseData.token;
+    });
 
     router.push({ name: "main" });
   } catch (error) {

@@ -1,4 +1,5 @@
 <script setup>
+import { useUserStore } from '@/stores/user';
 import { ref } from 'vue';
 
 const characterCount = ref(0);
@@ -10,8 +11,8 @@ function updateCharacterCount(event) {
     characterCount.value = event.target.value.length;
 }
 
-const userInfo = JSON.parse(localStorage.getItem("user"));
-const token = userInfo?.token;
+const userStore = useUserStore();
+const token = userStore.token;
 
 async function createPost() {
     successMessage.value = "";

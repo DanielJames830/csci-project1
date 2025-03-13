@@ -1,6 +1,6 @@
 <script setup>
 import { ref, defineProps } from 'vue';
-
+import { useUserStore } from '@/stores/user';
 const characterCount = ref(0);
 const postBody = ref("");
 const successMessage = ref("");
@@ -10,8 +10,8 @@ function updateCharacterCount(event) {
     characterCount.value = event.target.value.length;
 }
 
-const userInfo = JSON.parse(localStorage.getItem("user"));
-const token = userInfo?.token;
+const userStore = useUserStore();
+const token = userStore.token;
 
 const props = defineProps(['userId']); 
 

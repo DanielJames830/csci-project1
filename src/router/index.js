@@ -8,9 +8,12 @@ import Search from "@/views/Search.vue";
 import Menu from "@/views/Menu.vue";
 import Profile from "@/views/Profile.vue";
 import PrivateFeed from "@/views/PrivateFeed.vue";
+import { useUserStore } from "@/stores/user";
 
 const isAuthenticated = () => {
-  return !!localStorage.getItem("user");
+  const userStore = useUserStore();
+  console.log(userStore.token);
+  return userStore.token;
 };
 
 const router = createRouter({

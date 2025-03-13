@@ -3,12 +3,13 @@ import Post from '@/components/Post.vue';
 import { onMounted, onBeforeUnmount, ref, defineProps, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import PrivatePostBar from '@/components/PrivatePostBar.vue';
+import { useUserStore } from '@/stores/user';
 
 const route = useRoute();
 const props = defineProps(['userId']); 
 
-const userInfo = JSON.parse(localStorage.getItem("user"));
-const token = userInfo?.token;
+const userStore = useUserStore();
+const token = userStore.token;
 
 const messages = ref([]);
 const earliestTime = ref();

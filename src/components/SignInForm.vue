@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import { useUserStore } from "@/stores/user";
 import { ref, reactive } from "vue";
 import { useRouter } from "vue-router";
 
@@ -73,9 +74,15 @@ export default {
 
                 
                 const userData = await response.json();
-                // Save to local storage
-                localStorage.setItem("user", JSON.stringify(userData));
 
+                const userStore = useUserStore();
+                userStore.$patch(() => {
+                    userStore.email = userData.email;
+                    userStore.userName = userData.userName;
+                    userStore.firstName = userData.firstName;
+                    userStore.lastName = userData.lastName;
+                    userStore.token = userData.token;
+                });
                 router.push({ name: "main" });
             } catch (error) {
                 console.error("An error occurred while submitting the form:", error);

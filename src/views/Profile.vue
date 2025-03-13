@@ -34,6 +34,7 @@
 </template>
 
 <script setup>
+import { useUserStore } from '@/stores/user';
 import { ref, onMounted, useTemplateRef } from 'vue';
 import Toast from '@/components/Toast.vue';
 import EditForm from '@/components/EditForm.vue';
@@ -61,8 +62,12 @@ async function save() {
     await getUser();
     nameDialog.value.close();
 }
-const userInfo = JSON.parse(localStorage.getItem("user"));
-const token = userInfo.token
+
+
+const userStore = useUserStore();
+const token = userStore.token;
+
+
 const name = ref('');
 const user = ref(null);
 

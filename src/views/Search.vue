@@ -20,6 +20,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import User from "../components/User.vue";
+import { useUserStore } from "../stores/user";
 
 const searchText = ref("");
 const users = ref([]);
@@ -27,8 +28,8 @@ const sortBy = ref("firstName");
 const skip = ref(0);
 const limit = ref(5);
 
-const userInfo = JSON.parse(localStorage.getItem("user"));
-const token = userInfo?.token;
+const userStore = useUserStore();
+const token = userStore.token;
 
 const fetchUsers = async () => {
   const query = new URLSearchParams({

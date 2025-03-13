@@ -2,10 +2,9 @@
 import { ref } from "vue";
 import Navbar from "@/components/Navbar.vue";
 import { RouterView, useRouter } from "vue-router";
+import { useUserStore } from "@/stores/user";
 
-const userInfo = JSON.parse(localStorage.getItem("user"));
-
-const username = ref(userInfo.user.userName);
+const userStore = useUserStore();
 const openDrawer = ref(false);
 const router = useRouter();
 
@@ -16,7 +15,7 @@ function toggleDrawer() {
 
 async function deleteUser(e) {
   const url = "https://hap-app-api.azurewebsites.net/user";
-  const token = userInfo.token
+  const token = userStore.token;
 
   const options = {
     method: "DELETE",
@@ -29,7 +28,7 @@ async function deleteUser(e) {
   let response = await fetch(url, options);
 
   if (response.ok) {
-    localStorage.clear();
+    userStore.$reset();
     router.push({ name: 'home' });
   } else {
     alert("Unable to delete account");
@@ -41,7 +40,7 @@ async function deleteUser(e) {
 async function signOut(e) {
 
   const url = "https://hap-app-api.azurewebsites.net/user/logout";
-  const token = userInfo.token
+  const token = userStore.token;
 
   const options = {
     method: "POST",
@@ -54,7 +53,8 @@ async function signOut(e) {
 
   if (response.ok) {
     if (response.status === 200) {
-      localStorage.clear();
+      const userStore = useUserStore();
+      userStore.$reset();
       router.push({ name: "home" });
     }
   } else {
